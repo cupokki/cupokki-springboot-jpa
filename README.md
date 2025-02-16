@@ -1,5 +1,5 @@
-# cupokki-springboot-jpa
-스프링부트 보일러 플레이트 프로젝트
+# cupokki-springboot-jpa-webmvc
+스프링부트 보일러 플레이트 프로젝트. webmvc 버전
 
 # 배포
   //url..
@@ -12,3 +12,4 @@
   - Spring Security
   - MariaDB
   - Docker
+  - Thymeleaf
