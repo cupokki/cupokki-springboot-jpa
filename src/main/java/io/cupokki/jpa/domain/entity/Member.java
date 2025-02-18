@@ -1,11 +1,18 @@
 package io.cupokki.jpa.domain.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Entity
 public class Member {
 
     public Member() {
@@ -13,13 +20,15 @@ public class Member {
     }
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long memberSeq;
 
     private String username;
 
     private String memberPw;
 
-    private String regDate;
+    @CreationTimestamp
+    private LocalDateTime regDate;
 
     private int useYn;
 
