@@ -10,16 +10,17 @@
 
 </head>
 <h1 class="w-1 justify-center">Main</h1>
-<div class="flex h-screen justify-center items-center border-2 border-solid">
+<div class="flex flex-col items-center justify-center max-w-4xl min-w-[300px] mx-auto my-[100px] py-[100px] border-2 border-solid rounded-lg drop-shadow-md">
+<!--<div class="flex h-screen justify-center items-center ">-->
+    <h2 class="w-full text-center text-2xl font-bold mb-4">박스 리스트</h2>
+
     <div class="flex flex-wrap gap-2 justify-center items-start">
         <a class="w-1/3 bg-blue-500 text-bold text-white p-6 rounded-lg hover:bg-blue-700 transition duration-300" th:href="@{/posts}">
-            <i class="bi bi-list-ul"></i>index 1</a>
+            <i class="bi bi-list-ul">test</i><span>index 1</span></a>
         <div class="w-1/3 bg-blue-500 text-bold text-white p-6 rounded-lg hover:bg-blue-700 transition duration-300">
             <a th:href="@{/posts}"><i class="bi bi-list-ul"></i>index 1</a></div>
         <div class="w-1/3 bg-blue-500 text-bold text-white p-6 rounded-lg hover:bg-blue-700 transition duration-300">
             <a th:href="@{/posts}"><i class="bi bi-list-ul"></i>index 1</a></div>
-
-
     </div>
 </div>
 </html>
