@@ -1,10 +1,10 @@
 package io.cupokki.jpa.service.Impl;
 
-import io.cupokki.jpa.domain.dto.PostCreateDto;
-import io.cupokki.jpa.domain.dto.PostDto;
+import io.cupokki.jpa.dto.PostCreateDto;
+import io.cupokki.jpa.dto.PostDto;
+import io.cupokki.jpa.dto.PostResponseDto;
 import io.cupokki.jpa.service.PostService;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +20,17 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Optional<PostDto> findById() {
+    public Optional<PostDto> findById(Long postSeq) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<PostDto> findByKeyword() {
+    public Optional<PostDto> findByKeyword(String keyword) {
         return Optional.empty();
+    }
+
+    @Override
+    public boolean delete(Long postSeq, Long MemberSeq) {
+        return false;
     }
 }

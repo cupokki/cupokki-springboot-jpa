@@ -1,4 +1,4 @@
-package io.cupokki.jpa.domain.entity;
+package io.cupokki.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

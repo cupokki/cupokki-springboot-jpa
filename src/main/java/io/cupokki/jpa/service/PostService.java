@@ -1,14 +1,13 @@
 package io.cupokki.jpa.service;
 
-import io.cupokki.jpa.domain.dto.PostCreateDto;
-import io.cupokki.jpa.domain.dto.PostDto;
+import io.cupokki.jpa.dto.PostCreateDto;
+import io.cupokki.jpa.dto.PostDto;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+//@Service
 public interface PostService {
 
     public Optional<PostCreateDto> save(PostCreateDto postCreateDto);
@@ -16,8 +15,11 @@ public interface PostService {
     //TODO : 추후에 Pageable
     public List<PostDto> findAll();
 
-    public Optional<PostDto> findById();
+    public Optional<PostDto> findById(Long postSeq);
 
-    public Optional<PostDto> findByKeyword();
+    public Optional<PostDto> findByKeyword(String keyword);
+
+    //TODO : 더 좋은 구조를 생각해볼 것
+    public boolean delete(Long postSeq, Long MemberSeq);
 
 }
