@@ -9,7 +9,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
 </head>
-<ul>
-    <li th:each="post:${posts}">게시물</li>
-</ul>
+<body>
+<table class="w-full text-left text-gray-900">
+    <thead>
+    <tr class="border-t border-b border-gray-300 bg-gray-200">
+        <th class="w-12 px-2 py-2">순번</th>
+        <th class="w-[60%] px-4 py-2">제목</th>
+        <th class="w-24 px-2 py-2">작성자</th>
+        <th class="w-24 px-2 py-2">날짜</th>
+    </tr>
+    </thead>
+    <tbody th:each="post:${posts}">
+    <tr class="border-b border-gray-300 hover:bg-gray-100">
+
+        <td th:text="${post.postSeq}" class="px-2 py-2"><a href="/" class="block w-full h-full">순번</a></td>
+            <td th:text="${post.title}" class="px-2 py-2 font-bold"><a href="/" class="block w-full h-full">제목</a></td>
+            <td th:text="${post.memberSeq}" class="px-2 py-2"><a href="/" class="block w-full h-full">작성자</a></td>
+            <td class="px-2 py-2"><a href="/" class="block w-full h-full">날짜</a></td>
+        </a>
+    </tr>
+    </tbody>
+
+</table>
+</body>
 </html>

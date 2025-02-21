@@ -1,6 +1,8 @@
 package io.cupokki.jpa.dto;
 
+import io.cupokki.jpa.entity.Post;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -17,4 +19,14 @@ public class PostDto {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
+    public PostDto () {};
+    public PostDto(Post post) {
+        this.postSeq = post.getPostSeq();
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.memberSeq = post.getMemberSeq();
+        this.publishYn = post.getPublishYn();
+        this.createAt = post.getCreateAt();
+        this.updateAt = post.getUpdateAt();
+    }
 }
