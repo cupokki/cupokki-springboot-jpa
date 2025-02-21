@@ -14,7 +14,7 @@ public class PostDto {
     private String content;
     private Long memberSeq;
     private int publishYn;
-    private LocalDateTime create_at;
-    private LocalDateTime update_at;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 
 }
