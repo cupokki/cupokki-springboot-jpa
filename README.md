@@ -10,6 +10,5 @@
 # 사용 스택
   - Spring Data JPA
   - Spring Security
-  - MariaDB
   - Docker
   - Thymeleaf
