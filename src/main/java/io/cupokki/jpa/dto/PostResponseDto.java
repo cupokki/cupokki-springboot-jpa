@@ -16,5 +16,4 @@ public class PostResponseDto {
     private int publishYn;
     private LocalDateTime create_at;
     private LocalDateTime update_at;
-
 }

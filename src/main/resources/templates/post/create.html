@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupokki JPA Webmvc</title>
+    <!-- ✅ Tailwind CDN 추가 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body>
+    <form action="/posts/create" method="post">
+        <div class="flex flex-wrap">
+            <label class="w-1" for="title">제목</label>
+            <input class="w-1 boarder-2 boarder-solid" id="title" type="text" name="content"/>
+            <label for="content">내용</label>
+            <input id="content" type="text" name="content"/>
+            <input id="memberSeq" type="text" name="content" hidden="hidden" value=""/>
+            <input type="submit" value="test">
+        </div>
+    </form>
+</body>
+</html>

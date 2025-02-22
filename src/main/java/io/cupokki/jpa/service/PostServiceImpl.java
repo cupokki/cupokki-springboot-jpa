@@ -1,12 +1,12 @@
-package io.cupokki.jpa.service.Impl;
+package io.cupokki.jpa.service;
 
 import io.cupokki.jpa.dto.PostCreateDto;
 import io.cupokki.jpa.dto.PostDto;
-import io.cupokki.jpa.entity.Post;
 import io.cupokki.jpa.repository.PostRepository;
-import io.cupokki.jpa.service.PostService;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +20,6 @@ public class PostServiceImpl implements PostService {
         this.postRepository = postRepository;
     }
 
-
     @Override
     public PostDto createPost(PostCreateDto postCreateDto) {
         var post = new io.cupokki.jpa.entity.Post();
@@ -28,12 +27,11 @@ public class PostServiceImpl implements PostService {
         post.setContent(postCreateDto.getContent());
         post.setMemberSeq(postCreateDto.getMemberSeq());
         PostDto postDto = new PostDto(postRepository.save(post));
-        log.info(postDto.getContent());
         return postDto;
     }
 
     @Override
-    public List<PostDto> findAll() {
+    public List<PostDto> getAll() {
 //        return List.of();
         return postRepository.findAll().stream().map(post->
                 post.fromPostDto(
@@ -54,12 +52,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto findByKeyword(String keyword) {
+    public PostDto searchByKeyword(String keyword) {
         return new PostDto();
     }
 
     @Override
-    public boolean delete(Long postSeq, Long MemberSeq) {
-        return false;
+    public boolean delete(Long postSeq, Long memberSeq) {
+        try {
+            var post = postRepository.findById(postSeq).orElseThrow(()-> new RuntimeException("err"));
+            if (!post.getMemberSeq().equals(memberSeq))
+                return false;
+            postRepository.delete(post);
+            return true;
+        }catch(Exception e) {
+            return false;
+        }
+
+
     }
 }

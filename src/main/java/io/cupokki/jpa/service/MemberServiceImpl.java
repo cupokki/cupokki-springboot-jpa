@@ -1,4 +1,4 @@
-package io.cupokki.jpa.service.Impl;
+package io.cupokki.jpa.service;
 
 import io.cupokki.jpa.dto.MemberCreateDto;
 import io.cupokki.jpa.dto.MemberDto;

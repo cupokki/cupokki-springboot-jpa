@@ -1,10 +1,8 @@
 package io.cupokki.jpa.config;
 
-import io.cupokki.jpa.repository.MemberRepository;
 import io.cupokki.jpa.repository.PostRepository;
-import io.cupokki.jpa.repository.impl.MemberJpqlRepository;
-import io.cupokki.jpa.service.Impl.MemberServiceImpl;
-import io.cupokki.jpa.service.Impl.PostServiceImpl;
+import io.cupokki.jpa.service.MemberServiceImpl;
+import io.cupokki.jpa.service.PostServiceImpl;
 import io.cupokki.jpa.service.MemberService;
 import io.cupokki.jpa.service.PostService;
 import jakarta.persistence.EntityManager;

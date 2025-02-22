@@ -3,6 +3,7 @@ package io.cupokki.jpa.controller;
 import io.cupokki.jpa.dto.PostCreateDto;
 import io.cupokki.jpa.dto.PostDto;
 import io.cupokki.jpa.service.PostService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +34,10 @@ public class PostController {
         dto.setContent("test content");
         dto.setMemberSeq(1L);
         postService.createPost(dto);
-        List<PostDto> posts = postService.findAll();
+        List<PostDto> posts = postService.getAll();
         model.addAttribute("posts", posts);
         log.info("test");
-        return "list";
+        return "post/list";
     }
 
 //
@@ -51,14 +52,15 @@ public class PostController {
 //        return "detail";
 //    }
 //
-//    /**
-//     * 게시물 생성 뷰
-//     */
-//    @GetMapping("/create")
-//    public String create(Model model) {
-//
-//        return "create";
-//    }
+    /**
+     * 게시물 생성 뷰
+     */
+    @GetMapping("/create")
+    public String create(Model model, HttpSession httpSession) {
+//        httpSession.getAttribute("memberSeq");
+//        model.addAttribute("memberSeq", )
+        return "post/create";
+    }
 //
 //
 //    /**

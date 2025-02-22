@@ -13,13 +13,12 @@ public interface PostService {
     public PostDto createPost(PostCreateDto postCreateDto);
 
     //TODO : 추후에 Pageable
-    public List<PostDto> findAll();
+    public List<PostDto> getAll();
 
     public PostDto getById(Long postSeq);
 
-    public PostDto findByKeyword(String keyword);
+    public PostDto searchByKeyword(String keyword);
 
-    //TODO : 더 좋은 구조를 생각해볼 것, 이것도Dto?
-    public boolean delete(Long postSeq, Long MemberSeq);
+    public boolean delete(Long postSeq, Long memberSeq);
 
 }
