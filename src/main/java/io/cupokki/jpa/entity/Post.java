@@ -1,5 +1,6 @@
 package io.cupokki.jpa.entity;
 
+import io.cupokki.jpa.dto.PostDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,9 +33,19 @@ public class Post {
     private int publishYn;
 
     @CreationTimestamp
-    private LocalDateTime create_at;
+    private LocalDateTime createAt;
 
     @UpdateTimestamp
-    private LocalDateTime update_at;
+    private LocalDateTime updateAt;
 
+    public PostDto fromPostDto(Long postSeq, String title, String content, Long memberSeq, LocalDateTime createAt, LocalDateTime updateAt) {
+        PostDto dto = new PostDto();
+        dto.setPostSeq(postSeq);
+        dto.setTitle(title);
+        dto.setContent(content);
+        dto.setMemberSeq(memberSeq);
+        dto.setCreateAt(createAt);
+        dto.setUpdateAt(updateAt);
+        return dto;
+    }
 }

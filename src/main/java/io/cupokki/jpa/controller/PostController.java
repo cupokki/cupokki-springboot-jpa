@@ -2,7 +2,6 @@ package io.cupokki.jpa.controller;
 
 import io.cupokki.jpa.dto.PostCreateDto;
 import io.cupokki.jpa.dto.PostDto;
-import io.cupokki.jpa.dto.PostResponseDto;
 import io.cupokki.jpa.service.PostService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +26,20 @@ public class PostController {
      * 게시물 리스트 뷰
      */
     @GetMapping
-    public String list() {
+    public String list(Model model) {
 //    public String list(@RequestParam(required = false) int pages, Model model) {
         //TODO : Pageable 추후에 적용하기
-//        List<PostDto> posts = postService.findAll();
-//        model.addAttribute("posts", posts);
+        var dto = new PostCreateDto();
+        dto.setTitle("test title");
+        dto.setContent("test content");
+        dto.setMemberSeq(1L);
+        postService.createPost(dto);
+        List<PostDto> posts = postService.getAll();
+        model.addAttribute("posts", posts);
         log.info("test");
-        return "list";
+        return "post/list";
     }
+
 //
 //    /**
 //     * 게시물 상세보기 뷰
@@ -47,14 +52,15 @@ public class PostController {
 //        return "detail";
 //    }
 //
-//    /**
-//     * 게시물 생성 뷰
-//     */
-//    @GetMapping("/create")
-//    public String create(Model model) {
-//
-//        return "create";
-//    }
+    /**
+     * 게시물 생성 뷰
+     */
+    @GetMapping("/create")
+    public String create(Model model, HttpSession httpSession) {
+//        httpSession.getAttribute("memberSeq");
+//        model.addAttribute("memberSeq", )
+        return "post/create";
+    }
 //
 //
 //    /**

@@ -1,9 +1,9 @@
 package io.cupokki.jpa.config;
 
 import io.cupokki.jpa.repository.MemberRepository;
-import io.cupokki.jpa.repository.impl.MemberJpqlRepository;
-import io.cupokki.jpa.service.Impl.MemberServiceImpl;
-import io.cupokki.jpa.service.Impl.PostServiceImpl;
+import io.cupokki.jpa.repository.PostRepository;
+import io.cupokki.jpa.service.MemberServiceImpl;
+import io.cupokki.jpa.service.PostServiceImpl;
 import io.cupokki.jpa.service.MemberService;
 import io.cupokki.jpa.service.PostService;
 import jakarta.persistence.EntityManager;
@@ -16,19 +16,24 @@ public class SpringConfig {
 
     private final EntityManager em;
 
+    private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
+
     @Autowired
-    public SpringConfig(EntityManager em) {
+    public SpringConfig(EntityManager em, PostRepository postRepository, MemberRepository memberRepository) {
         this.em = em;
+        this.postRepository = postRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Bean
     public PostService postService() {
-        return new PostServiceImpl();
+        return new PostServiceImpl(postRepository);
     }
 
     @Bean
     public MemberService memberService() {
-        return new MemberServiceImpl();
+        return new MemberServiceImpl(memberRepository);
     }
 
 

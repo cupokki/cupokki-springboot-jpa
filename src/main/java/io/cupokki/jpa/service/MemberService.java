@@ -2,6 +2,7 @@ package io.cupokki.jpa.service;
 
 import io.cupokki.jpa.dto.MemberCreateDto;
 import io.cupokki.jpa.dto.MemberDto;
+import io.cupokki.jpa.dto.MemberLoginDto;
 import io.cupokki.jpa.dto.PostResponseDto;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,14 @@ import java.util.Optional;
 //@Service
 public interface MemberService {
 
-    public Optional<MemberCreateDto> join(MemberCreateDto memberCreateDto);
+    public MemberDto join(MemberCreateDto memberCreateDto) throws Exception;
 
-    public Optional<MemberDto> login(MemberDto Dto);
+    public MemberDto login(MemberLoginDto memberLoginDto) throws Exception;
 
     // 파라미터, 반환타입 생각해볼 것
-    public Boolean deleteMember(MemberDto Dto);
+    public Boolean deleteMember(MemberDto memberDto);
 
-    public Optional<MemberDto> findById();
+    public MemberDto getById(Long memberSeq);
+
+    public Boolean isDuplicateEmail(String email);
 }

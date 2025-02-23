@@ -2,24 +2,23 @@ package io.cupokki.jpa.service;
 
 import io.cupokki.jpa.dto.PostCreateDto;
 import io.cupokki.jpa.dto.PostDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 //@Service
+
+//컨트롤러에 옵셔널을 넘겨주면 안된다.
 public interface PostService {
 
-    public Optional<PostCreateDto> save(PostCreateDto postCreateDto);
+    public PostDto createPost(PostCreateDto postCreateDto);
 
     //TODO : 추후에 Pageable
-    public List<PostDto> findAll();
+    public List<PostDto> getAll();
 
-    public Optional<PostDto> findById(Long postSeq);
+    public PostDto getById(Long postSeq);
 
-    public Optional<PostDto> findByKeyword(String keyword);
+    public PostDto searchByKeyword(String keyword);
 
-    //TODO : 더 좋은 구조를 생각해볼 것
-    public boolean delete(Long postSeq, Long MemberSeq);
+    public boolean delete(Long postSeq, Long memberSeq);
 
 }
