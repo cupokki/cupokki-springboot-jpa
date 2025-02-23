@@ -1,5 +1,6 @@
 package io.cupokki.jpa.config;
 
+import io.cupokki.jpa.repository.MemberRepository;
 import io.cupokki.jpa.repository.PostRepository;
 import io.cupokki.jpa.service.MemberServiceImpl;
 import io.cupokki.jpa.service.PostServiceImpl;
@@ -16,11 +17,13 @@ public class SpringConfig {
     private final EntityManager em;
 
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public SpringConfig(EntityManager em, PostRepository postRepository) {
+    public SpringConfig(EntityManager em, PostRepository postRepository, MemberRepository memberRepository) {
         this.em = em;
         this.postRepository = postRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Bean
@@ -30,7 +33,7 @@ public class SpringConfig {
 
     @Bean
     public MemberService memberService() {
-        return new MemberServiceImpl();
+        return new MemberServiceImpl(memberRepository);
     }
 
 
