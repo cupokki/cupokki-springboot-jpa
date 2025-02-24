@@ -10,17 +10,31 @@
 
 </head>
 <body>
-<form action="/members/join" method="post">
-    <div class="flex flex-wrap">
-        <label class="w-1/2" for="email">이메일</label>
-        <input class="w-1/2" id="email" name="email" type="email" required placeholder="email">
-        <input id="isDuplicate" value="true" hidden>
-        <label class="w-1/2" for="password">비밀번호</label>
-        <input class="w-1/2" id="password" name="password" type="password" required placeholder="password">
-        <label class="w-1/2" for="passwordCheck">비밀번호 확인</label>
-        <input class="w-1/2" id="passwordCheck" name="passwordCheck" type="password" required placeholder="password check">
+<div>
+    <form action="/members/join" method="post">
+        <div class="flex flex-wrap">
+            <label class="w-1/4 p-2 justify-center" for="email" c>이메일</label>
+            <input class="w-2/4 p-2 focus:bg-gray-200 focus:outline-none transition duration-300" id="email" name="email" type="email" required placeholder="email">
+            <button class="w-1/4 bg-blue-500 text-white p-2 rounded-lg">중복 체크</button>
+            <input id="isDuplicate" value="true" hidden>
+            <label class="w-1/4" for="password">비밀번호</label>
+            <input class="w-3/4 focus:bg-gray-200 focus:outline-none transition duration-300" id="password" name="password" type="password" required placeholder="password">
+            <label class="w-1/4 focus:bg-gray-200 focus:outline-none transition duration-300" for="passwordCheck">비밀번호 확인</label>
+            <input class="w-3/4 focus:bg-gray-200 focus:outline-none transition duration-300" id="passwordCheck" name="passwordCheck" type="password" required placeholder="password check" pattern=".{6,}" title="hello?">
 
-    </div>
-</form>
+        </div>
+    </form>
+
+</div>
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" stroke="#2ecc71" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="25" cy="25" r="20" stroke-dasharray="126" stroke-dashoffset="126">
+        <animate attributeName="stroke-dashoffset" from="126" to="0" dur="0.5s" fill="freeze"/>
+    </circle>
+    <polyline points="15,25 22,33 35,18" stroke-dasharray="30" stroke-dashoffset="30">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.5s" begin="0.2s" fill="freeze"/>
+    </polyline>
+</svg>
+<i class="bi bi-check-circle-fill" style="font-size: 2rem; color: #2ecc71;"></i>
+
 </body>
 </html>
