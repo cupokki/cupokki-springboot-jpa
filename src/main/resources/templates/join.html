@@ -11,12 +11,14 @@
 </head>
 <body>
 <div>
+    <span class="text-red" th:text="${msg}"></span>
     <form action="/members/join" method="post">
         <div class="flex flex-wrap">
             <label class="w-1/4 p-2 justify-center" for="email" c>이메일</label>
             <input class="w-2/4 p-2 focus:bg-gray-200 focus:outline-none transition duration-300" id="email" name="email" type="email" required placeholder="email">
             <button class="w-1/4 bg-blue-500 text-white p-2 rounded-lg">중복 체크</button>
-            <input id="isDuplicate" value="true" hidden>
+            <input type="checkbox" id="isDuplicateEmail" hidden>
+<!--            -->
             <label class="w-1/4" for="password">비밀번호</label>
             <input class="w-3/4 focus:bg-gray-200 focus:outline-none transition duration-300" id="password" name="password" type="password" required placeholder="password">
             <label class="w-1/4 focus:bg-gray-200 focus:outline-none transition duration-300" for="passwordCheck">비밀번호 확인</label>
