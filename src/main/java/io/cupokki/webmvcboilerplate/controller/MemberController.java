@@ -5,11 +5,13 @@ import io.cupokki.webmvcboilerplate.dto.MemberDto;
 import io.cupokki.webmvcboilerplate.dto.MemberLoginDto;
 import io.cupokki.webmvcboilerplate.service.MemberService;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@Slf4j
 @Controller
 @RequestMapping("/members")
 public class MemberController {
@@ -53,6 +55,8 @@ public class MemberController {
                             HttpSession httpSession,
                             Model model) {
         try {
+            log.info(memberCreateDto.getPassword());
+            log.info(memberCreateDto.getConfirmPassword());
             MemberDto memberDto = memberService.join(memberCreateDto);
             model.addAttribute("msg", "success"); // useless
             httpSession.setAttribute("member", memberDto);
