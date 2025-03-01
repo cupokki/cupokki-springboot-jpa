@@ -5,6 +5,7 @@ import io.cupokki.webmvcboilerplate.dto.MemberDto;
 import io.cupokki.webmvcboilerplate.dto.MemberLoginDto;
 import io.cupokki.webmvcboilerplate.entity.Member;
 import io.cupokki.webmvcboilerplate.repository.MemberRepository;
+import io.cupokki.webmvcboilerplate.util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,6 +23,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto join(MemberCreateDto memberCreateDto) throws Exception{
         // 이메일 중복체크
         // 요청을 보내는 중에 중복된 이메일이 생성될 수 있잖아?
+        // 실무에선 이게 그렇게 부담되는 동작이 아니다.?
         if (!isDuplicateEmail(memberCreateDto.getEmail())) {
             throw new Exception("사용할 수 없는 이메일입니다.");
         }
@@ -31,9 +33,9 @@ public class MemberServiceImpl implements MemberService {
             throw new Exception("확인 비밀번호가 일치하지 않습니다.");
         }
 
-
+        String hashed = PasswordUtil.hash(memberCreateDto.getEmail());
         Member member = Member.builder()
-                .email(memberCreateDto.getEmail())
+                .email(hashed)
                 .memberPw(memberCreateDto.getPassword())
                 .build();
 
