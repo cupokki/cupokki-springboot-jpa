@@ -11,10 +11,14 @@ public interface MemberService {
 
     public MemberDto login(MemberLoginDto memberLoginDto) throws Exception;
 
+    public MemberDto update(MemberDto memberDto);
+
     // 파라미터, 반환타입 생각해볼 것
-    public Boolean deleteMember(MemberDto memberDto);
+    public Boolean delete(MemberDto memberDto);
 
     public MemberDto getById(Long memberSeq);
 
     public Boolean isDuplicateEmail(String email);
+
+    public boolean isDuplicateUsername(String username);
 }

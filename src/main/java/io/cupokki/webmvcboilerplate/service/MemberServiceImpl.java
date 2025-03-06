@@ -8,15 +8,18 @@ import io.cupokki.webmvcboilerplate.repository.MemberRepository;
 import io.cupokki.webmvcboilerplate.util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberServiceImpl(MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,7 +36,10 @@ public class MemberServiceImpl implements MemberService {
             throw new Exception("확인 비밀번호가 일치하지 않습니다.");
         }
 
-        String hashed = PasswordUtil.hash(memberCreateDto.getEmail());
+        // encrypted pw
+//            PasswordUtil.encode(memberLoginDto.getMemberPw());
+
+        String hashed = passwordEncoder.encode(memberCreateDto.getPassword());
         Member member = Member.builder()
                 .email(hashed)
                 .memberPw(memberCreateDto.getPassword())
@@ -51,8 +57,9 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto login(MemberLoginDto memberLoginDto)  {
         try {
             Member member = memberRepository.findByEmail(memberLoginDto.getEmail());
-            // encrypted pw
-//            encode(memberLoginDto.getPassword());
+
+            // authentification
+            passwordEncoder.matches(memberLoginDto.getMemberPw(), member.getMemberPw());
 
             if (member.getMemberPw() == memberLoginDto.getMemberPw())
                 return MemberDto.builder()
@@ -68,7 +75,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Boolean deleteMember(MemberDto Dto) {
+    public MemberDto update(MemberDto memberDto) {
+        return null;
+    }
+
+    @Override
+    public Boolean delete(MemberDto memberDto) {
+
         return null;
     }
 
@@ -80,9 +93,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Boolean isDuplicateEmail(String email) {
-        if(memberRepository.findByEmail(email) == null){
+//        if(memberRepository.findByEmail(email) == null){
+        if(memberRepository.existByEmail(email)){
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean isDuplicateUsername(String username) {
+        if (memberRepository.existByUsername(username))
+            return true;
         return false;
     }
 }

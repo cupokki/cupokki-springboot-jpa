@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class MemberCreateDto {
     private String email;
+    private String username;
     private String password;
     private String confirmPassword;
     private boolean isDuplicate;

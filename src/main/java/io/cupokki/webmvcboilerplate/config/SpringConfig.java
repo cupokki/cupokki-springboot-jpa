@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SpringConfig {
@@ -18,12 +19,14 @@ public class SpringConfig {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SpringConfig(EntityManager em, PostRepository postRepository, MemberRepository memberRepository) {
+    public SpringConfig(EntityManager em, PostRepository postRepository, MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
         this.em = em;
         this.postRepository = postRepository;
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -33,7 +36,7 @@ public class SpringConfig {
 
     @Bean
     public MemberService memberService() {
-        return new MemberServiceImpl(memberRepository);
+        return new MemberServiceImpl(memberRepository, passwordEncoder);
     }
 
 
