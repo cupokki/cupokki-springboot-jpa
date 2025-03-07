@@ -94,7 +94,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Boolean isDuplicateEmail(String email) {
 //        if(memberRepository.findByEmail(email) == null){
-        if(memberRepository.existByEmail(email)){
+        if(memberRepository.existsByEmail(email)){
             return true;
         }
         return false;
@@ -102,7 +102,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean isDuplicateUsername(String username) {
-        if (memberRepository.existByUsername(username))
+        if (memberRepository.existsByUsername(username))
             return true;
         return false;
     }
