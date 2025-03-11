@@ -1,9 +1,9 @@
 package io.cupokki.webmvcboilerplate.entity;
 
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import io.cupokki.webmvcboilerplate.dto.PostDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 public class Post {
 
     public Post() {
@@ -24,19 +26,26 @@ public class Post {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long postSeq;
 
+    @NotNull
     private String title;
 
+    @NotNull
     private String content;
 
+    private String visibility;
+
+    @NotNull
     @Column
     private Long memberSeq;
 
     private int publishYn;
 
     @CreationTimestamp
+    @NotNull
     private LocalDateTime createAt;
 
     @UpdateTimestamp
+    @NotNull
     private LocalDateTime updateAt;
 
     public PostDto fromPostDto(Long postSeq, String title, String content, Long memberSeq, LocalDateTime createAt, LocalDateTime updateAt) {
