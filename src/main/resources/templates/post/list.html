@@ -1,36 +1,54 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cupokki JPA Webmvc</title>
+    <title>Cupokki JPA Web MVC</title>
     <!-- ✅ Tailwind CDN 추가 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
 </head>
 <body>
-<table class="w-full text-left text-gray-900">
-    <thead>
-    <tr class="border-t border-b border-gray-300 bg-gray-200">
-        <th class="w-12 px-2 py-2">순번</th>
-        <th class="w-[60%] px-4 py-2">제목</th>
-        <th class="w-24 px-2 py-2">작성자</th>
-        <th class="w-24 px-2 py-2">날짜</th>
-    </tr>
-    </thead>
-    <tbody th:each="post:${posts}">
-    <tr class="border-b border-gray-300 hover:bg-gray-100">
 
-        <td th:text="${post.postSeq}" class="px-2 py-2"><a href="/" class="block w-full h-full">순번</a></td>
-            <td th:text="${post.title}" class="px-2 py-2 font-bold"><a href="/" class="block w-full h-full">제목</a></td>
-            <td th:text="${post.memberSeq}" class="px-2 py-2"><a href="/" class="block w-full h-full">작성자</a></td>
-            <td class="px-2 py-2"><a href="/" class="block w-full h-full">날짜</a></td>
-        </a>
-    </tr>
-    </tbody>
-</table>
-    <a href="/posts/create"><i class="bi bi-pencil"></i>
-    </a>
+<main layout:fragment="main-content" class="bg-black">
+
+
+
+
+    <div class="flex flex-col gap-2 w-full h-full items-center">
+        <h1 class="my-4 inline-block text-white text-[1.5rem] font-bold">게시판1</h1>
+        <ul class=" my-8 ">
+            <li th:each="post:${posts}" class="w-[540px] min-w-[180px] rounded-lg bg-white m-2 hover:bg-stone-200 transition">
+                <a th:href="@{/}" class="flex flex-col block w-auto h-full p-10">
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="mx-2 bg-stone-500 rounded-full w-[1rem] h-[2rem]">프사</span>
+                            <span th:text="${post.memberSeq}">작성자</span>
+                        </div>
+
+                        <div>2025-2-2</div>
+                    </div>
+                    <h2 th:text="${post.title}" class="text-bold text-[1.2rem]"></h2>
+                    <div>content summary...</div>
+                    <div class="flex flex-row-reverse gap-2">
+                        <span><i class="px-2 bi bi-chat-dots"></i>0</span>
+                        <span><i class="px-2 bi bi-heart"></i>0</span>
+                    </div>
+
+                </a>
+            </li>
+        </ul>
+        <div class="self-end sticky bottom-4 right-4 m-8 inline-block rounded-full bg-teal-300 hover:bg-teal-700 transition">
+            <a th:href="@{/posts/create}" class="flex flex-col align-center items-center p-2 flex-grow-0 w-20 h-20">
+                <i class="bi bi-pencil text-[1.4rem]"></i>
+                <div class="text-[0.8rem] text-bold">새 글</div>
+            </a>
+        </div>
+    </div>
+
+</main>
 </body>
 </html>
