@@ -1,5 +1,6 @@
 package io.cupokki.webmvcboilerplate.dto;
 
+import io.cupokki.webmvcboilerplate.entity.Member;
 import io.cupokki.webmvcboilerplate.entity.Post;
 import lombok.*;
 
@@ -15,18 +16,9 @@ public class PostCreateDto {
     private Long postSeq;
     private String title;
     private String content;
-    private Long memberSeq;
+    private Member member;
     private int publishYn;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    public PostCreateDto(Post post) {
-        this.postSeq = post.getPostSeq();
-        this.title = post.getTitle();
-        this.content = post.getContent();
-        this.memberSeq = post.getMemberSeq();
-        this.publishYn = post.getPublishYn();
-        this.createAt = post.getCreateAt();
-        this.updateAt = post.getUpdateAt();
-    }
 }

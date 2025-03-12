@@ -34,9 +34,8 @@ public class Post {
 
     private String visibility;
 
-    @NotNull
-    @Column
-    private Long memberSeq;
+    @ManyToOne
+    private Member member;
 
     private int publishYn;
 
@@ -47,15 +46,4 @@ public class Post {
     @UpdateTimestamp
     @NotNull
     private LocalDateTime updateAt;
-
-    public PostDto fromPostDto(Long postSeq, String title, String content, Long memberSeq, LocalDateTime createAt, LocalDateTime updateAt) {
-        PostDto dto = new PostDto();
-        dto.setPostSeq(postSeq);
-        dto.setTitle(title);
-        dto.setContent(content);
-        dto.setMemberSeq(memberSeq);
-        dto.setCreateAt(createAt);
-        dto.setUpdateAt(updateAt);
-        return dto;
-    }
 }

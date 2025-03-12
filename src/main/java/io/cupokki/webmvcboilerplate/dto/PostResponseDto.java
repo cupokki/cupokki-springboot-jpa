@@ -1,5 +1,6 @@
 package io.cupokki.webmvcboilerplate.dto;
 
+import io.cupokki.webmvcboilerplate.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ public class PostResponseDto {
     private Long postSeq;
     private String title;
     private String content;
-    private Long memberSeq;
+    private Member member;
     private int publishYn;
     private LocalDateTime create_at;
     private LocalDateTime update_at;
