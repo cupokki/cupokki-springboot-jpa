@@ -7,9 +7,7 @@ import io.cupokki.webmvcboilerplate.dto.MemberLoginDto;
 //@Service
 public interface MemberService {
 
-    public MemberDto join(MemberCreateDto memberCreateDto) throws Exception;
-
-    public MemberDto login(MemberLoginDto memberLoginDto) throws Exception;
+    public void join(MemberCreateDto memberCreateDto) throws Exception;
 
     public MemberDto update(MemberDto memberDto);
 
@@ -17,8 +15,4 @@ public interface MemberService {
     public Boolean delete(MemberDto memberDto);
 
     public MemberDto getById(Long memberSeq);
-
-    public Boolean isDuplicateEmail(String email);
-
-    public boolean isDuplicateUsername(String username);
 }

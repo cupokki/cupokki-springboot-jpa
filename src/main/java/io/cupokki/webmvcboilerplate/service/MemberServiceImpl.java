@@ -6,72 +6,36 @@ import io.cupokki.webmvcboilerplate.dto.MemberLoginDto;
 import io.cupokki.webmvcboilerplate.entity.Member;
 import io.cupokki.webmvcboilerplate.repository.MemberRepository;
 import io.cupokki.webmvcboilerplate.util.PasswordUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Slf4j
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
-        this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
     @Override
-    public MemberDto join(MemberCreateDto memberCreateDto) throws Exception{
-        // 이메일 중복체크
-        // 요청을 보내는 중에 중복된 이메일이 생성될 수 있잖아?
-        // 실무에선 이게 그렇게 부담되는 동작이 아니다.?
-        if (!isDuplicateEmail(memberCreateDto.getEmail())) {
-            throw new Exception("사용할 수 없는 이메일입니다.");
-        }
-        // 비밀번호 확인 검사
+    public void join(MemberCreateDto memberCreateDto) throws Exception {
 
-        if (!memberCreateDto.getPassword().equals(memberCreateDto.getConfirmPassword())) {
-            throw new Exception("확인 비밀번호가 일치하지 않습니다.");
-        }
+        if (memberRepository.existsByEmail(memberCreateDto.getEmail()))
+            throw new Exception("중복된 이메일");
+        if (memberRepository.existsByUsername(memberCreateDto.getUsername()))
+            throw new Exception("중복된 유저이름");
+        if (!memberCreateDto.getPassword().equals(memberCreateDto.getConfirmPassword()))
+            throw new Exception("비밀번호 확인 불일치");
 
-        // encrypted pw
-//            PasswordUtil.encode(memberLoginDto.getMemberPw());
-
-        String hashed = passwordEncoder.encode(memberCreateDto.getPassword());
         Member member = Member.builder()
-                .email(hashed)
-                .memberPw(memberCreateDto.getPassword())
+                .email(memberCreateDto.getEmail())
+                .username(memberCreateDto.getUsername())
+                .memberPw(passwordEncoder.encode(memberCreateDto.getPassword()))
                 .build();
+        var saved= memberRepository.save(member);
 
-        Member saved = memberRepository.save(member);
-
-        return MemberDto.builder()
-                .memberSeq(saved.getMemberSeq())
-                .email(saved.getEmail())
-                .build();
-    }
-
-    @Override
-    public MemberDto login(MemberLoginDto memberLoginDto)  {
-        try {
-            Member member = memberRepository.findByEmail(memberLoginDto.getEmail());
-
-            // authentification
-            passwordEncoder.matches(memberLoginDto.getMemberPw(), member.getMemberPw());
-
-            if (member.getMemberPw() == memberLoginDto.getMemberPw())
-                return MemberDto.builder()
-                        .memberSeq(member.getMemberSeq())
-                        .username(member.getUsername())
-                        .regDate(member.getRegDate())
-                        .build();
-        } catch (Exception e) {
-
-        }
-        return MemberDto.builder()
-                .build();
+        return;
     }
 
     @Override
@@ -89,21 +53,5 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto getById(Long memberSeq) {
         return MemberDto.builder()
                 .build();
-    }
-
-    @Override
-    public Boolean isDuplicateEmail(String email) {
-//        if(memberRepository.findByEmail(email) == null){
-        if(memberRepository.existsByEmail(email)){
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean isDuplicateUsername(String username) {
-        if (memberRepository.existsByUsername(username))
-            return true;
-        return false;
     }
 }
