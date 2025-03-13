@@ -13,9 +13,9 @@ import java.util.List;
 //TODO : 추후에 빌더로 변경
 @Getter
 @Setter
-@Entity
 @Builder
 @AllArgsConstructor
+@Entity
 public class Post {
 
     public Post() {

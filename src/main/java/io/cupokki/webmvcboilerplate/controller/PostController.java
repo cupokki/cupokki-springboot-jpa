@@ -29,10 +29,12 @@ public class PostController {
     public String list(Model model) {
 //    public String list(@RequestParam(required = false) int pages, Model model) {
         //TODO : Pageable 추후에 적용하기
-        var dto = new PostCreateDto();
-        dto.setTitle("test title");
-        dto.setContent("test content");
-        dto.setMemberSeq(1L);
+        var dto = PostCreateDto.builder()
+                .title("테스트 게시물 제목")
+                .content("이런내용의 본문이 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구")
+                .member(null)
+                .build();
+
         postService.createPost(dto);
         List<PostDto> posts = postService.getAll();
         model.addAttribute("posts", posts);

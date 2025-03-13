@@ -2,12 +2,17 @@ package io.cupokki.webmvcboilerplate.service;
 
 import io.cupokki.webmvcboilerplate.dto.PostCreateDto;
 import io.cupokki.webmvcboilerplate.dto.PostDto;
+import io.cupokki.webmvcboilerplate.entity.Member;
+import io.cupokki.webmvcboilerplate.entity.Post;
 import io.cupokki.webmvcboilerplate.repository.PostRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.collect;
 
 public class PostServiceImpl implements PostService {
 
@@ -20,47 +25,56 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostCreateDto postCreateDto) {
-        var post = new io.cupokki.webmvcboilerplate.entity.Post();
-        post.setTitle(postCreateDto.getTitle());
-        post.setContent(postCreateDto.getContent());
-        post.setMemberSeq(postCreateDto.getMemberSeq());
-        PostDto postDto = new PostDto(postRepository.save(post));
-        return postDto;
+        var post = Post.builder()
+                .title(postCreateDto.getTitle())
+                .content(postCreateDto.getContent())
+                .member(postCreateDto.getMember())
+                .build();
+
+        var saved = postRepository.save(post);
+        return PostDto.builder()
+                .title(saved.getTitle())
+                .content(saved.getContent())
+                .member(saved.getMember())
+                .createAt(saved.getCreateAt())
+                .updateAt(saved.getUpdateAt())
+                .build();
     }
 
     @Override
     public List<PostDto> getAll() {
-//        return List.of();
-        return postRepository.findAll().stream().map(post->
-                post.fromPostDto(
-                    post.getPostSeq(),
-                    post.getTitle(),
-                    post.getContent(),
-                    post.getMemberSeq(),
-                    post.getCreateAt(),
-                    post.getUpdateAt()
-            )
-        ).collect(Collectors.toList());
+        return new ArrayList<PostDto>();
     }
 
     @Override
     public PostDto getById(Long postSeq) {
         var result = postRepository.findById(postSeq).orElseThrow(()-> new RuntimeException("err"));
-        return new PostDto(result);
+        return PostDto.builder()
+                .title(result.getTitle())
+                .content(result.getContent())
+                .member(result.getMember())
+                .createAt(result.getCreateAt())
+                .updateAt(result.getUpdateAt())
+                .build();
     }
 
     @Override
     public PostDto searchByKeyword(String keyword) {
-        return new PostDto();
+        var result = new Post();
+        return PostDto.builder()
+                .title(result.getTitle())
+                .content(result.getContent())
+                .member(result.getMember())
+                .createAt(result.getCreateAt())
+                .updateAt(result.getUpdateAt())
+                .build();
     }
 
     @Override
     public boolean delete(Long postSeq, Long memberSeq) {
         try {
             var post = postRepository.findById(postSeq).orElseThrow(()-> new RuntimeException("err"));
-            if (!post.getMemberSeq().equals(memberSeq))
-                return false;
-            postRepository.delete(post);
+//            postRepository.delete(post);
             return true;
         }catch(Exception e) {
             return false;
