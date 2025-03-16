@@ -24,27 +24,24 @@ public class AuthController {
 
     /** 로그인 뷰 */
     @GetMapping("/login")
-    public String loginForm() { return "login"; }
+    public String loginForm() { return "auth/login"; }
 
     /** 가입 뷰 */
     @GetMapping("/join")
     public String joinForm(){
-        return "join";
+        return "auth/join";
     }
 
     @PostMapping("/join")
     public String join(@ModelAttribute MemberCreateDto memberCreateDto, Model model) {
         try {
-
-            log.info(memberCreateDto.getPassword());
-            log.info(memberCreateDto.getConfirmPassword());
             memberService.join(memberCreateDto);
         } catch (Exception e) {
             model.addAttribute("msg", e.getMessage());
-            return "join";
+            return "auth/join";
         }
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     // API-------------------------------------------------------------------------------

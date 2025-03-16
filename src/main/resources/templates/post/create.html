@@ -14,13 +14,13 @@
 <body>
 
 <main layout:fragment="main-content" class="bg-black">
-    <form action="/members/join" method="post" class="flex justify-center p-20">
+    <form th:action="@{posts/create}" method="post" class="flex justify-center p-20">
         <div class="flex flex-col gap-2 w-[720px] p-12 bg-white rounded-lg">
             <h1 class="font-bold text-center text-[2rem] p-4">새로운 게시글</h1>
             <label for="title">제목</label>
-            <input id="title" name="title" type="email" placeholder="title" class="px-4 py-2 bg-stone-100 rounded-lg">
+            <input id="title" name="title" placeholder="title" class="px-4 py-2 bg-stone-100 rounded-lg">
             <label for="content">본문</label>
-            <textarea id="content" name="content" placeholder="Write contents..." rows="36"  class="px-4 py-2 bg-stone-100 rounded-lg resize-none"></textarea>
+            <textarea id="content" name="content" placeholder="Write contents..." rows="18"  class="px-4 py-2 bg-stone-100 rounded-lg resize-none"></textarea>
             <button type="submit" class="text-white m-4 p-4 bg-teal-600 rounded-lg">제출</button>
             <span class="text-red" th:text="${msg}" ></span>
 

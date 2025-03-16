@@ -1,12 +1,15 @@
 package io.cupokki.webmvcboilerplate.config;
 
 import io.cupokki.webmvcboilerplate.repository.MemberRepository;
+import io.cupokki.webmvcboilerplate.security.EmailPasswordAuthenticationProvider;
 import io.cupokki.webmvcboilerplate.service.MemberDetailsService;
 import io.cupokki.webmvcboilerplate.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -32,16 +37,29 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
-    public UserDetailsService userDeatailsService(MemberRepository memberRepository) {
+    public UserDetailsService userDetailsService(MemberRepository memberRepository) {
         return new MemberDetailsService(memberRepository);
     }
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public EmailPasswordAuthenticationProvider emailPasswordAuthenticationProvider(
+            MemberDetailsService memberDetailsService,
+            PasswordEncoder passwordEncoder
+    ) {
+        return new EmailPasswordAuthenticationProvider(memberDetailsService, passwordEncoder);
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(
+            HttpSecurity httpSecurity,
+            EmailPasswordAuthenticationProvider emailPasswordAuthenticationProvider
+    ) throws Exception {
         httpSecurity
+                .authenticationProvider(emailPasswordAuthenticationProvider)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/join", "/images/**").permitAll()
+                        .requestMatchers("/", "/login", "/join").permitAll()
+                        .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll() // H2 Console 접근 허용
                         .requestMatchers(HttpMethod.POST, "/join").permitAll()
                         .anyRequest().authenticated()
@@ -52,7 +70,9 @@ public class SecurityConfig {
                 .formLogin(login->login
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/", false)
+                        .usernameParameter("email")
+                        .failureUrl("/login?error=true")
+                        .defaultSuccessUrl("/", false) // 자동으로 리디렉션
                         .permitAll()
                 )
 //                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
@@ -70,6 +90,7 @@ public class SecurityConfig {
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(true)
                 )
+                // h2-console용
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));  // ✅ 최신 방식 (iframe 허용)
 
 

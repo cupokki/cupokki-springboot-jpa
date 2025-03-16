@@ -32,10 +32,11 @@ class PostServiceTest {
     @DisplayName("포스트 생성")
     void createPost() {
         //given
-        PostCreateDto dto = new PostCreateDto();
-        dto.setTitle("title");
-        dto.setContent("content");
-        dto.setMemberSeq(1L);
+        PostCreateDto dto = PostCreateDto.builder()
+                .title("title")
+                .content("content")
+                .member(null)
+                .build();
 
         //when
         postService.createPost(dto);
@@ -53,15 +54,17 @@ class PostServiceTest {
     @Test
     void findAll() {
         //given
-        PostCreateDto dto1 = new PostCreateDto();
-        dto1.setTitle("title1");
-        dto1.setContent("content1");
-        dto1.setMemberSeq(1L);
+        PostCreateDto dto1 = PostCreateDto.builder()
+                .title("title1")
+                .content("content")
+                .member(null)
+                .build();
 
-        PostCreateDto dto2 = new PostCreateDto();
-        dto2.setTitle("title2");
-        dto2.setContent("content2");
-        dto2.setMemberSeq(2L);
+        PostCreateDto dto2 = PostCreateDto.builder()
+                .title("title2")
+                .content("content")
+                .member(null)
+                .build();
 
         //when
         postService.createPost(dto1);
@@ -77,8 +80,8 @@ class PostServiceTest {
         //given
         PostCreateDto dto1 = PostCreateDto.builder()
                 .title("title1")
-                .content("content1")
-                .memberSeq(1L)
+                .content("content")
+                .member(null)
                 .build();
         //when
         postService.createPost(dto1);
@@ -103,8 +106,8 @@ class PostServiceTest {
         //given
         PostCreateDto dto1 = PostCreateDto.builder()
                 .title("title1")
-                .content("content1")
-                .memberSeq(1L)
+                .content("content")
+                .member(null)
                 .build();
 
         //when

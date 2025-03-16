@@ -1,16 +1,16 @@
 package io.cupokki.webmvcboilerplate.service;
 
 import io.cupokki.webmvcboilerplate.entity.Member;
-import io.cupokki.webmvcboilerplate.entity.MemberDetails;
+import io.cupokki.webmvcboilerplate.dto.MemberDetails;
 import io.cupokki.webmvcboilerplate.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
+@Slf4j
 @Service
 public class MemberDetailsService implements UserDetailsService {
 
@@ -22,9 +22,13 @@ public class MemberDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> {
+                    log.debug("Invalid login credentials");
+                    return new UsernameNotFoundException("Invalid login credentials");
+                });
+//        log.debug(member.getEmail());
         return new MemberDetails(member);
     }
 }

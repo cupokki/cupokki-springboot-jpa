@@ -2,12 +2,8 @@ package io.cupokki.webmvcboilerplate.service;
 
 import io.cupokki.webmvcboilerplate.dto.MemberCreateDto;
 import io.cupokki.webmvcboilerplate.dto.MemberDto;
-import io.cupokki.webmvcboilerplate.dto.MemberLoginDto;
 import io.cupokki.webmvcboilerplate.entity.Member;
-import io.cupokki.webmvcboilerplate.entity.MemberDetails;
 import io.cupokki.webmvcboilerplate.repository.MemberRepository;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
